@@ -13,9 +13,16 @@
         android:theme="@style/Theme._24012011119_MAD_Medicare">
 
         <activity
+            android:name=".AddMedicineActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MedicinesActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
 
         <activity
             android:name=".LoginActivity"

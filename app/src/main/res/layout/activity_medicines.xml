@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7FAFC"
+    android:padding="20dp">
+
+    <!-- Back Button -->
+    <TextView
+        android:id="@+id/txtBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="‹"
+        android:textColor="#172554"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Page Title -->
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Medicines"
+        android:textColor="#172554"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/txtBack"
+        app:layout_constraintStart_toEndOf="@id/txtBack"
+        app:layout_constraintTop_toTopOf="@id/txtBack" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/txtSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Keep track of your daily medicines"
+        android:textColor="#64748B"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtBack" />
+
+    <!-- Medicine Card 1 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMedicine1"
+        android:layout_width="0dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="22dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtSubtitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <!-- Medicine Icon -->
+            <TextView
+                android:id="@+id/txtMedicineIcon1"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="#DBEAFE"
+                android:gravity="center"
+                android:text="💊"
+                android:textSize="27sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Medicine Name -->
+            <TextView
+                android:id="@+id/txtMedicineName1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="Paracetamol"
+                android:textColor="#172554"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/txtArrow1"
+                app:layout_constraintStart_toEndOf="@id/txtMedicineIcon1"
+                app:layout_constraintTop_toTopOf="@id/txtMedicineIcon1" />
+
+            <!-- Dosage -->
+            <TextView
+                android:id="@+id/txtDosage1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="500 mg  •  1 tablet"
+                android:textColor="#64748B"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@id/txtArrow1"
+                app:layout_constraintStart_toEndOf="@id/txtMedicineIcon1"
+                app:layout_constraintTop_toBottomOf="@id/txtMedicineName1" />
+
+            <!-- Reminder -->
+            <TextView
+                android:id="@+id/txtTime1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="6dp"
+                android:text="⏰  08:00 AM"
+                android:textColor="#2563EB"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/txtArrow1"
+                app:layout_constraintStart_toEndOf="@id/txtMedicineIcon1"
+                app:layout_constraintTop_toBottomOf="@id/txtDosage1" />
+
+            <!-- Arrow -->
+            <TextView
+                android:id="@+id/txtArrow1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="›"
+                android:textColor="#64748B"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Medicine Card 2 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMedicine2"
+        android:layout_width="0dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="14dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardMedicine1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <!-- Medicine Icon -->
+            <TextView
+                android:id="@+id/txtMedicineIcon2"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="#DBEAFE"
+                android:gravity="center"
+                android:text="💊"
+                android:textSize="27sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Medicine Name -->
+            <TextView
+                android:id="@+id/txtMedicineName2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="Vitamin D"
+                android:textColor="#172554"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/txtArrow2"
+                app:layout_constraintStart_toEndOf="@id/txtMedicineIcon2"
+                app:layout_constraintTop_toTopOf="@id/txtMedicineIcon2" />
+
+            <!-- Dosage -->
+            <TextView
+                android:id="@+id/txtDosage2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="1 tablet"
+                android:textColor="#64748B"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@id/txtArrow2"
+                app:layout_constraintStart_toEndOf="@id/txtMedicineIcon2"
+                app:layout_constraintTop_toBottomOf="@id/txtMedicineName2" />
+
+            <!-- Reminder -->
+            <TextView
+                android:id="@+id/txtTime2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="6dp"
+                android:text="⏰  08:00 PM"
+                android:textColor="#2563EB"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/txtArrow2"
+                app:layout_constraintStart_toEndOf="@id/txtMedicineIcon2"
+                app:layout_constraintTop_toBottomOf="@id/txtDosage2" />
+
+            <!-- Arrow -->
+            <TextView
+                android:id="@+id/txtArrow2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="›"
+                android:textColor="#64748B"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Add Medicine Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddMedicine"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="20dp"
+        android:text="+  Add Medicine"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#2563EB"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
