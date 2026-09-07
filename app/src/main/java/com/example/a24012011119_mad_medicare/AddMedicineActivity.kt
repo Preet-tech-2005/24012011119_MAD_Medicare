@@ -1,8 +1,5 @@
 package com.example.a24012011119_mad_medicare
 
-
-
-
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -18,6 +15,7 @@ import java.util.Locale
 class AddMedicineActivity : AppCompatActivity() {
 
     private lateinit var txtBack: TextView
+
     private lateinit var edtMedicineName: TextInputEditText
     private lateinit var edtDosage: TextInputEditText
     private lateinit var edtStartDate: TextInputEditText
@@ -25,14 +23,22 @@ class AddMedicineActivity : AppCompatActivity() {
     private lateinit var edtReminderTime: TextInputEditText
     private lateinit var edtFrequency: TextInputEditText
     private lateinit var edtNotes: TextInputEditText
+
     private lateinit var btnSaveMedicine: MaterialButton
+
+    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_add_medicine)
 
+        // Database
+        databaseHelper = DatabaseHelper(this)
+
+        // Find views
         txtBack = findViewById(R.id.txtBack)
+
         edtMedicineName = findViewById(R.id.edtMedicineName)
         edtDosage = findViewById(R.id.edtDosage)
         edtStartDate = findViewById(R.id.edtStartDate)
@@ -40,9 +46,10 @@ class AddMedicineActivity : AppCompatActivity() {
         edtReminderTime = findViewById(R.id.edtReminderTime)
         edtFrequency = findViewById(R.id.edtFrequency)
         edtNotes = findViewById(R.id.edtNotes)
+
         btnSaveMedicine = findViewById(R.id.btnSaveMedicine)
 
-        // Back
+        // Back button
         txtBack.setOnClickListener {
             finish()
         }
@@ -62,15 +69,13 @@ class AddMedicineActivity : AppCompatActivity() {
             showTimePicker()
         }
 
-        // Save
+        // Save Medicine
         btnSaveMedicine.setOnClickListener {
             saveMedicine()
         }
     }
 
-    private fun showDatePicker(
-        editText: TextInputEditText
-    ) {
+    private fun showDatePicker(editText: TextInputEditText) {
 
         val calendar = Calendar.getInstance()
 
@@ -82,10 +87,11 @@ class AddMedicineActivity : AppCompatActivity() {
 
                 date.set(year, month, day)
 
-                val format = SimpleDateFormat(
-                    "dd/MM/yyyy",
-                    Locale.getDefault()
-                )
+                val format =
+                    SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    )
 
                 editText.setText(
                     format.format(date.time)
@@ -107,13 +113,21 @@ class AddMedicineActivity : AppCompatActivity() {
 
                 val time = Calendar.getInstance()
 
-                time.set(Calendar.HOUR_OF_DAY, hour)
-                time.set(Calendar.MINUTE, minute)
-
-                val format = SimpleDateFormat(
-                    "hh:mm a",
-                    Locale.getDefault()
+                time.set(
+                    Calendar.HOUR_OF_DAY,
+                    hour
                 )
+
+                time.set(
+                    Calendar.MINUTE,
+                    minute
+                )
+
+                val format =
+                    SimpleDateFormat(
+                        "hh:mm a",
+                        Locale.getDefault()
+                    )
 
                 edtReminderTime.setText(
                     format.format(time.time)
@@ -127,20 +141,37 @@ class AddMedicineActivity : AppCompatActivity() {
 
     private fun saveMedicine() {
 
-        val name = edtMedicineName.text.toString().trim()
-        val dosage = edtDosage.text.toString().trim()
-        val startDate = edtStartDate.text.toString().trim()
-        val endDate = edtEndDate.text.toString().trim()
-        val reminderTime = edtReminderTime.text.toString().trim()
-        val frequency = edtFrequency.text.toString().trim()
+        val name =
+            edtMedicineName.text.toString().trim()
 
+        val dosage =
+            edtDosage.text.toString().trim()
+
+        val startDate =
+            edtStartDate.text.toString().trim()
+
+        val endDate =
+            edtEndDate.text.toString().trim()
+
+        val reminderTime =
+            edtReminderTime.text.toString().trim()
+
+        val frequency =
+            edtFrequency.text.toString().trim()
+
+        val notes =
+            edtNotes.text.toString().trim()
+
+        // Validation
         if (name.isEmpty()) {
             edtMedicineName.error = "Enter medicine name"
+            edtMedicineName.requestFocus()
             return
         }
 
         if (dosage.isEmpty()) {
             edtDosage.error = "Enter dosage"
+            edtDosage.requestFocus()
             return
         }
 
@@ -161,13 +192,44 @@ class AddMedicineActivity : AppCompatActivity() {
 
         if (frequency.isEmpty()) {
             edtFrequency.error = "Enter frequency"
+            edtFrequency.requestFocus()
             return
         }
 
-        Toast.makeText(
-            this,
-            "Medicine details entered successfully",
-            Toast.LENGTH_SHORT
-        ).show()
+        // Insert into SQLite
+        val inserted = databaseHelper.insertMedicine(
+            name,
+            dosage,
+            startDate,
+            endDate,
+            reminderTime,
+            frequency,
+            notes
+        )
+
+        if (inserted) {
+
+            Toast.makeText(
+                this,
+                "Medicine Added Successfully",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            // Go back to My Medicines
+            finish()
+
+        } else {
+
+            Toast.makeText(
+                this,
+                "Failed to add medicine",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    override fun onDestroy() {
+        databaseHelper.close()
+        super.onDestroy()
     }
 }

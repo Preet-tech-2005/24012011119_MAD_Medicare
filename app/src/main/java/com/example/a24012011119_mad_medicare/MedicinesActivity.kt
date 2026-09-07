@@ -1,22 +1,24 @@
 package com.example.a24012011119_mad_medicare
 
-
-
-
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 
 class MedicinesActivity : AppCompatActivity() {
 
     private lateinit var txtBack: TextView
-    private lateinit var cardMedicine1: MaterialCardView
-    private lateinit var cardMedicine2: MaterialCardView
+    private lateinit var recyclerMedicines: RecyclerView
     private lateinit var btnAddMedicine: MaterialButton
+
+    private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var medicineAdapter: MedicineAdapter
+
+    private lateinit var cursor: Cursor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,31 +26,19 @@ class MedicinesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_medicines)
 
         txtBack = findViewById(R.id.txtBack)
-        cardMedicine1 = findViewById(R.id.cardMedicine1)
-        cardMedicine2 = findViewById(R.id.cardMedicine2)
+        recyclerMedicines = findViewById(R.id.recyclerMedicines)
         btnAddMedicine = findViewById(R.id.btnAddMedicine)
+
+        databaseHelper = DatabaseHelper(this)
+
+        recyclerMedicines.layoutManager =
+            LinearLayoutManager(this)
+
+        loadMedicines()
 
         // Back button
         txtBack.setOnClickListener {
             finish()
-        }
-
-        // Medicine 1
-        cardMedicine1.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Paracetamol",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        // Medicine 2
-        cardMedicine2.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Vitamin D",
-                Toast.LENGTH_SHORT
-            ).show()
         }
 
         // Add Medicine
@@ -61,5 +51,40 @@ class MedicinesActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+    }
+
+    private fun loadMedicines() {
+
+        cursor = databaseHelper.getAllMedicines()
+
+        medicineAdapter = MedicineAdapter(cursor)
+
+        recyclerMedicines.adapter = medicineAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (::databaseHelper.isInitialized &&
+            ::medicineAdapter.isInitialized
+        ) {
+            val newCursor =
+                databaseHelper.getAllMedicines()
+
+            medicineAdapter.updateCursor(newCursor)
+        }
+    }
+
+    override fun onDestroy() {
+
+        if (::cursor.isInitialized &&
+            !cursor.isClosed
+        ) {
+            cursor.close()
+        }
+
+        databaseHelper.close()
+
+        super.onDestroy()
     }
 }
