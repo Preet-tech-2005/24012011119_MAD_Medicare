@@ -12,12 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._24012011119_MAD_Medicare">
 
+
+        <activity
+            android:name=".MedicineDetailsActivity"
+            android:exported="false" />
+
         <activity
             android:name=".AddMedicineActivity"
             android:exported="false" />
 
         <activity
             android:name=".MedicinesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrescriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrescriptionDetailsActivity"
             android:exported="false" />
 
         <activity

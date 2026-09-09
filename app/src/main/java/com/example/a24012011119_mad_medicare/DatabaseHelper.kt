@@ -12,8 +12,9 @@ class DatabaseHelper(context: Context) :
     companion object {
 
         private const val DATABASE_NAME = "MediCare.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
 
+        // Medicine Table
         private const val TABLE_MEDICINES = "medicines"
 
         private const val ID = "id"
@@ -24,11 +25,22 @@ class DatabaseHelper(context: Context) :
         private const val REMINDER_TIME = "reminder_time"
         private const val FREQUENCY = "frequency"
         private const val NOTES = "notes"
+
+        // Prescription Table
+        private const val TABLE_PRESCRIPTION = "prescription"
+
+        private const val PRESCRIPTION_ID = "id"
+        private const val DOCTOR_NAME = "doctor_name"
+        private const val PRESCRIPTION_DATE = "prescription_date"
+        private const val DIAGNOSIS = "diagnosis"
+        private const val PRESCRIPTION_DETAILS = "prescription_details"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
 
-        val query = """
+        // Medicine Table
+
+        val medicineQuery = """
             CREATE TABLE $TABLE_MEDICINES (
                 $ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $MEDICINE_NAME TEXT,
@@ -41,7 +53,22 @@ class DatabaseHelper(context: Context) :
             )
         """.trimIndent()
 
-        db.execSQL(query)
+        db.execSQL(medicineQuery)
+
+
+        // Prescription Table
+
+        val prescriptionQuery = """
+            CREATE TABLE $TABLE_PRESCRIPTION (
+                $PRESCRIPTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $DOCTOR_NAME TEXT,
+                $PRESCRIPTION_DATE TEXT,
+                $DIAGNOSIS TEXT,
+                $PRESCRIPTION_DETAILS TEXT
+            )
+        """.trimIndent()
+
+        db.execSQL(prescriptionQuery)
     }
 
     override fun onUpgrade(
@@ -49,9 +76,24 @@ class DatabaseHelper(context: Context) :
         oldVersion: Int,
         newVersion: Int
     ) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_MEDICINES")
-        onCreate(db)
+
+        if (oldVersion < 2) {
+
+            val prescriptionQuery = """
+                CREATE TABLE IF NOT EXISTS $TABLE_PRESCRIPTION (
+                    $PRESCRIPTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    $DOCTOR_NAME TEXT,
+                    $PRESCRIPTION_DATE TEXT,
+                    $DIAGNOSIS TEXT,
+                    $PRESCRIPTION_DETAILS TEXT
+                )
+            """.trimIndent()
+
+            db.execSQL(prescriptionQuery)
+        }
     }
+
+    // ---------------- MEDICINE ----------------
 
     fun insertMedicine(
         name: String,
@@ -81,18 +123,52 @@ class DatabaseHelper(context: Context) :
             values
         )
 
-        db.close()
-
         return result != -1L
     }
 
-    // Get all medicines
     fun getAllMedicines(): Cursor {
 
         val db = readableDatabase
 
         return db.rawQuery(
             "SELECT * FROM $TABLE_MEDICINES ORDER BY $ID DESC",
+            null
+        )
+    }
+
+    // ---------------- PRESCRIPTION ----------------
+
+    fun insertPrescription(
+        doctorName: String,
+        date: String,
+        diagnosis: String,
+        details: String
+    ): Boolean {
+
+        val db = writableDatabase
+
+        val values = ContentValues()
+
+        values.put(DOCTOR_NAME, doctorName)
+        values.put(PRESCRIPTION_DATE, date)
+        values.put(DIAGNOSIS, diagnosis)
+        values.put(PRESCRIPTION_DETAILS, details)
+
+        val result = db.insert(
+            TABLE_PRESCRIPTION,
+            null,
+            values
+        )
+
+        return result != -1L
+    }
+
+    fun getLatestPrescription(): Cursor {
+
+        val db = readableDatabase
+
+        return db.rawQuery(
+            "SELECT * FROM $TABLE_PRESCRIPTION ORDER BY $PRESCRIPTION_ID DESC LIMIT 1",
             null
         )
     }

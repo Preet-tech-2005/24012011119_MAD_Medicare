@@ -8,283 +8,124 @@
     android:background="#F7FAFC"
     android:padding="20dp">
 
-    <!-- MediCare -->
+    <!-- App Name -->
+
     <TextView
         android:id="@+id/txtAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MediCare"
         android:textColor="#172554"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Profile -->
-    <TextView
-        android:id="@+id/txtProfile"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:background="#DBEAFE"
-        android:gravity="center"
-        android:text="👤"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Greeting -->
-    <TextView
-        android:id="@+id/txtGreeting"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="Good Morning! 👋"
-        android:textColor="#172554"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtAppName" />
 
     <!-- Subtitle -->
+
     <TextView
-        android:id="@+id/txtSubtitle"
+        android:id="@+id/txtWelcome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Stay healthy and take your medicines on time."
+        android:layout_marginTop="8dp"
+        android:text="Medicine Reminder &amp; Prescription Tracker"
         android:textColor="#64748B"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtGreeting" />
+        app:layout_constraintTop_toBottomOf="@id/txtAppName" />
 
-    <!-- Today's Plan -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/todayCard"
-        android:layout_width="0dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="22dp"
-        app:cardBackgroundColor="#2563EB"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtSubtitle">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp">
+    <!-- Medicine Card -->
 
-            <TextView
-                android:id="@+id/txtTodayPlan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Today's Plan"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtMedicineCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="2 medicines scheduled today"
-                android:textColor="#DBEAFE"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtTodayPlan" />
-
-            <TextView
-                android:id="@+id/txtNextMedicine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Next: Vitamin D  •  08:00 PM"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtMedicineCount" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Quick Actions -->
     <TextView
-        android:id="@+id/txtQuickActions"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtMedicineIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="40dp"
+        android:background="#DBEAFE"
+        android:gravity="center"
+        android:text="💊"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtWelcome" />
+
+
+    <TextView
+        android:id="@+id/txtMedicineTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Quick Actions"
+        android:layout_marginStart="18dp"
+        android:text="My Medicines"
         android:textColor="#172554"
-        android:textSize="19sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todayCard" />
-
-    <!-- My Medicines Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardMedicines"
-        android:layout_width="0dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="7dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toStartOf="@id/cardPrescriptions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtQuickActions">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtMedicineIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="💊"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toTopOf="@id/txtMedicineTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <TextView
-                android:id="@+id/txtMedicineTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="My Medicines"
-                android:textColor="#172554"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtMedicineIcon" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Prescriptions Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardPrescriptions"
-        android:layout_width="0dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="14dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/txtMedicineIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardMedicines"
-        app:layout_constraintTop_toBottomOf="@id/txtQuickActions">
+        app:layout_constraintStart_toEndOf="@id/txtMedicineIcon"
+        app:layout_constraintTop_toTopOf="@id/txtMedicineIcon" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/txtPrescriptionIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📋"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toTopOf="@id/txtPrescriptionTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <TextView
-                android:id="@+id/txtPrescriptionTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Prescriptions"
-                android:textColor="#172554"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtPrescriptionIcon" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- History Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardHistory"
-        android:layout_width="0dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="14dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardMedicines">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtHistoryIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📊"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toTopOf="@id/txtHistoryTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <TextView
-                android:id="@+id/txtHistoryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Medicine History"
-                android:textColor="#172554"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtHistoryIcon" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Add Medicine -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddMedicine"
+        android:id="@+id/btnMedicines"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginTop="22dp"
-        android:text="+  Add Medicine"
+        android:layout_marginTop="20dp"
+        android:text="My Medicines"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:backgroundTint="#2563EB"
-        app:cornerRadius="16dp"
+        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardHistory" />
+        app:layout_constraintTop_toBottomOf="@id/txtMedicineIcon" />
+
+
+    <!-- Prescription -->
+
+    <TextView
+        android:id="@+id/txtPrescriptionIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:background="#DBEAFE"
+        android:gravity="center"
+        android:text="📋"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnMedicines" />
+
+
+    <TextView
+        android:id="@+id/txtPrescriptionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="Prescription"
+        android:textColor="#172554"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/txtPrescriptionIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtPrescriptionIcon"
+        app:layout_constraintTop_toTopOf="@id/txtPrescriptionIcon" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPrescription"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:text="Prescription"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#2563EB"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtPrescriptionIcon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
