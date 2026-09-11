@@ -1,7 +1,10 @@
 package com.example.a24012011119_mad_medicare
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -28,64 +31,104 @@ class AddMedicineActivity : AppCompatActivity() {
 
     private lateinit var databaseHelper: DatabaseHelper
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_add_medicine)
 
-        // Database
         databaseHelper = DatabaseHelper(this)
 
-        // Find views
-        txtBack = findViewById(R.id.txtBack)
 
-        edtMedicineName = findViewById(R.id.edtMedicineName)
-        edtDosage = findViewById(R.id.edtDosage)
-        edtStartDate = findViewById(R.id.edtStartDate)
-        edtEndDate = findViewById(R.id.edtEndDate)
-        edtReminderTime = findViewById(R.id.edtReminderTime)
-        edtFrequency = findViewById(R.id.edtFrequency)
-        edtNotes = findViewById(R.id.edtNotes)
+        // Find Views
 
-        btnSaveMedicine = findViewById(R.id.btnSaveMedicine)
+        txtBack =
+            findViewById(R.id.txtBack)
+
+        edtMedicineName =
+            findViewById(R.id.edtMedicineName)
+
+        edtDosage =
+            findViewById(R.id.edtDosage)
+
+        edtStartDate =
+            findViewById(R.id.edtStartDate)
+
+        edtEndDate =
+            findViewById(R.id.edtEndDate)
+
+        edtReminderTime =
+            findViewById(R.id.edtReminderTime)
+
+        edtFrequency =
+            findViewById(R.id.edtFrequency)
+
+        edtNotes =
+            findViewById(R.id.edtNotes)
+
+        btnSaveMedicine =
+            findViewById(R.id.btnSaveMedicine)
+
 
         // Back button
+
         txtBack.setOnClickListener {
             finish()
         }
 
+
         // Start Date
+
         edtStartDate.setOnClickListener {
             showDatePicker(edtStartDate)
         }
 
+
         // End Date
+
         edtEndDate.setOnClickListener {
             showDatePicker(edtEndDate)
         }
 
+
         // Reminder Time
+
         edtReminderTime.setOnClickListener {
             showTimePicker()
         }
 
+
         // Save Medicine
+
         btnSaveMedicine.setOnClickListener {
             saveMedicine()
         }
     }
 
-    private fun showDatePicker(editText: TextInputEditText) {
 
-        val calendar = Calendar.getInstance()
+    // -----------------------------------------
+    // DATE PICKER
+    // -----------------------------------------
+
+    private fun showDatePicker(
+        editText: TextInputEditText
+    ) {
+
+        val calendar =
+            Calendar.getInstance()
 
         DatePickerDialog(
             this,
             { _, year, month, day ->
 
-                val date = Calendar.getInstance()
+                val date =
+                    Calendar.getInstance()
 
-                date.set(year, month, day)
+                date.set(
+                    year,
+                    month,
+                    day
+                )
 
                 val format =
                     SimpleDateFormat(
@@ -103,15 +146,22 @@ class AddMedicineActivity : AppCompatActivity() {
         ).show()
     }
 
+
+    // -----------------------------------------
+    // TIME PICKER
+    // -----------------------------------------
+
     private fun showTimePicker() {
 
-        val calendar = Calendar.getInstance()
+        val calendar =
+            Calendar.getInstance()
 
         TimePickerDialog(
             this,
             { _, hour, minute ->
 
-                val time = Calendar.getInstance()
+                val time =
+                    Calendar.getInstance()
 
                 time.set(
                     Calendar.HOUR_OF_DAY,
@@ -139,75 +189,122 @@ class AddMedicineActivity : AppCompatActivity() {
         ).show()
     }
 
+
+    // -----------------------------------------
+    // SAVE MEDICINE
+    // -----------------------------------------
+
     private fun saveMedicine() {
 
         val name =
-            edtMedicineName.text.toString().trim()
+            edtMedicineName.text
+                .toString()
+                .trim()
 
         val dosage =
-            edtDosage.text.toString().trim()
+            edtDosage.text
+                .toString()
+                .trim()
 
         val startDate =
-            edtStartDate.text.toString().trim()
+            edtStartDate.text
+                .toString()
+                .trim()
 
         val endDate =
-            edtEndDate.text.toString().trim()
+            edtEndDate.text
+                .toString()
+                .trim()
 
         val reminderTime =
-            edtReminderTime.text.toString().trim()
+            edtReminderTime.text
+                .toString()
+                .trim()
 
         val frequency =
-            edtFrequency.text.toString().trim()
+            edtFrequency.text
+                .toString()
+                .trim()
 
         val notes =
-            edtNotes.text.toString().trim()
+            edtNotes.text
+                .toString()
+                .trim()
+
 
         // Validation
+
         if (name.isEmpty()) {
-            edtMedicineName.error = "Enter medicine name"
-            edtMedicineName.requestFocus()
+
+            edtMedicineName.error =
+                "Enter medicine name"
+
             return
         }
 
         if (dosage.isEmpty()) {
-            edtDosage.error = "Enter dosage"
-            edtDosage.requestFocus()
+
+            edtDosage.error =
+                "Enter dosage"
+
             return
         }
 
         if (startDate.isEmpty()) {
-            edtStartDate.error = "Select start date"
+
+            edtStartDate.error =
+                "Select start date"
+
             return
         }
 
         if (endDate.isEmpty()) {
-            edtEndDate.error = "Select end date"
+
+            edtEndDate.error =
+                "Select end date"
+
             return
         }
 
         if (reminderTime.isEmpty()) {
-            edtReminderTime.error = "Select reminder time"
+
+            edtReminderTime.error =
+                "Select reminder time"
+
             return
         }
 
         if (frequency.isEmpty()) {
-            edtFrequency.error = "Enter frequency"
-            edtFrequency.requestFocus()
+
+            edtFrequency.error =
+                "Enter frequency"
+
             return
         }
 
-        // Insert into SQLite
-        val inserted = databaseHelper.insertMedicine(
-            name,
-            dosage,
-            startDate,
-            endDate,
-            reminderTime,
-            frequency,
-            notes
-        )
+
+        // Save Medicine to SQLite
+
+        val inserted =
+            databaseHelper.insertMedicine(
+                name,
+                dosage,
+                startDate,
+                endDate,
+                reminderTime,
+                frequency,
+                notes
+            )
+
 
         if (inserted) {
+
+            // Set Alarm
+
+            setMedicineAlarm(
+                name,
+                reminderTime
+            )
 
             Toast.makeText(
                 this,
@@ -215,7 +312,6 @@ class AddMedicineActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            // Go back to My Medicines
             finish()
 
         } else {
@@ -228,8 +324,149 @@ class AddMedicineActivity : AppCompatActivity() {
         }
     }
 
+
+    // -----------------------------------------
+    // SET MEDICINE ALARM
+    // -----------------------------------------
+
+    private fun setMedicineAlarm(
+        medicineName: String,
+        reminderTime: String
+    ) {
+
+        val format =
+            SimpleDateFormat(
+                "hh:mm a",
+                Locale.getDefault()
+            )
+
+        val time =
+            format.parse(reminderTime)
+
+        if (time == null) {
+            return
+        }
+
+
+        val reminderCalendar =
+            Calendar.getInstance()
+
+        reminderCalendar.time =
+            time
+
+
+        val alarmCalendar =
+            Calendar.getInstance()
+
+
+        // Set Hour
+
+        alarmCalendar.set(
+            Calendar.HOUR_OF_DAY,
+            reminderCalendar.get(
+                Calendar.HOUR_OF_DAY
+            )
+        )
+
+
+        // Set Minute
+
+        alarmCalendar.set(
+            Calendar.MINUTE,
+            reminderCalendar.get(
+                Calendar.MINUTE
+            )
+        )
+
+
+        // Set Seconds
+
+        alarmCalendar.set(
+            Calendar.SECOND,
+            0
+        )
+
+
+        // Set Milliseconds
+
+        alarmCalendar.set(
+            Calendar.MILLISECOND,
+            0
+        )
+
+
+        // If selected time has passed,
+        // schedule alarm for tomorrow
+
+        if (
+            alarmCalendar.timeInMillis <=
+            System.currentTimeMillis()
+        ) {
+
+            alarmCalendar.add(
+                Calendar.DAY_OF_YEAR,
+                1
+            )
+        }
+
+
+        // Intent for BroadcastReceiver
+
+        val intent =
+            Intent(
+                this,
+                AlarmReceiver::class.java
+            )
+
+        intent.putExtra(
+            "medicine_name",
+            medicineName
+        )
+
+
+        // PendingIntent
+
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                medicineName.hashCode(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or
+                        PendingIntent.FLAG_IMMUTABLE
+            )
+
+
+        // AlarmManager
+
+        val alarmManager =
+            getSystemService(
+                ALARM_SERVICE
+            ) as AlarmManager
+
+
+        alarmManager.setAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            alarmCalendar.timeInMillis,
+            pendingIntent
+        )
+
+
+        Toast.makeText(
+            this,
+            "Alarm Set Successfully",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+
+    // -----------------------------------------
+    // CLOSE DATABASE
+    // -----------------------------------------
+
     override fun onDestroy() {
+
         databaseHelper.close()
+
         super.onDestroy()
     }
 }
