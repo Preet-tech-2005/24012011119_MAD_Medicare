@@ -11,64 +11,40 @@ class DatabaseHelper(context: Context) :
 
     companion object {
 
-        private const val DATABASE_NAME = "MediCare.db"
-        private const val DATABASE_VERSION = 2
-
-        // Medicine Table
-        private const val TABLE_MEDICINES = "medicines"
-
-        private const val ID = "id"
-        private const val MEDICINE_NAME = "medicine_name"
-        private const val DOSAGE = "dosage"
-        private const val START_DATE = "start_date"
-        private const val END_DATE = "end_date"
-        private const val REMINDER_TIME = "reminder_time"
-        private const val FREQUENCY = "frequency"
-        private const val NOTES = "notes"
-
-        // Prescription Table
-        private const val TABLE_PRESCRIPTION = "prescription"
-
-        private const val PRESCRIPTION_ID = "id"
-        private const val DOCTOR_NAME = "doctor_name"
-        private const val PRESCRIPTION_DATE = "prescription_date"
-        private const val DIAGNOSIS = "diagnosis"
-        private const val PRESCRIPTION_DETAILS = "prescription_details"
+        private const val DATABASE_NAME = "medicare.db"
+        private const val DATABASE_VERSION = 4
     }
 
     override fun onCreate(db: SQLiteDatabase) {
 
-        // Medicine Table
-
-        val medicineQuery = """
-            CREATE TABLE $TABLE_MEDICINES (
-                $ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                $MEDICINE_NAME TEXT,
-                $DOSAGE TEXT,
-                $START_DATE TEXT,
-                $END_DATE TEXT,
-                $REMINDER_TIME TEXT,
-                $FREQUENCY TEXT,
-                $NOTES TEXT
+        // Prescription table
+        db.execSQL(
+            """
+            CREATE TABLE prescriptions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                doctor_name TEXT,
+                disease TEXT,
+                prescription_date TEXT
             )
-        """.trimIndent()
+            """.trimIndent()
+        )
 
-        db.execSQL(medicineQuery)
-
-
-        // Prescription Table
-
-        val prescriptionQuery = """
-            CREATE TABLE $TABLE_PRESCRIPTION (
-                $PRESCRIPTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                $DOCTOR_NAME TEXT,
-                $PRESCRIPTION_DATE TEXT,
-                $DIAGNOSIS TEXT,
-                $PRESCRIPTION_DETAILS TEXT
+        // Medicines inside each prescription
+        db.execSQL(
+            """
+            CREATE TABLE prescription_medicines (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                prescription_id INTEGER,
+                medicine_name TEXT,
+                dosage TEXT,
+                frequency TEXT,
+                frequency_count INTEGER,
+                duration_days INTEGER,
+                reminder_times TEXT,
+                taken_count INTEGER DEFAULT 0
             )
-        """.trimIndent()
-
-        db.execSQL(prescriptionQuery)
+            """.trimIndent()
+        )
     }
 
     override fun onUpgrade(
@@ -77,99 +53,266 @@ class DatabaseHelper(context: Context) :
         newVersion: Int
     ) {
 
-        if (oldVersion < 2) {
+        if (oldVersion < 4) {
 
-            val prescriptionQuery = """
-                CREATE TABLE IF NOT EXISTS $TABLE_PRESCRIPTION (
-                    $PRESCRIPTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    $DOCTOR_NAME TEXT,
-                    $PRESCRIPTION_DATE TEXT,
-                    $DIAGNOSIS TEXT,
-                    $PRESCRIPTION_DETAILS TEXT
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS prescriptions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    doctor_name TEXT,
+                    disease TEXT,
+                    prescription_date TEXT
                 )
-            """.trimIndent()
+                """.trimIndent()
+            )
 
-            db.execSQL(prescriptionQuery)
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS prescription_medicines (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    prescription_id INTEGER,
+                    medicine_name TEXT,
+                    dosage TEXT,
+                    frequency TEXT,
+                    frequency_count INTEGER,
+                    duration_days INTEGER,
+                    reminder_times TEXT,
+                    taken_count INTEGER DEFAULT 0
+                )
+                """.trimIndent()
+            )
         }
     }
 
-    // ---------------- MEDICINE ----------------
-
-    fun insertMedicine(
-        name: String,
-        dosage: String,
-        startDate: String,
-        endDate: String,
-        reminderTime: String,
-        frequency: String,
-        notes: String
-    ): Boolean {
-
-        val db = writableDatabase
-
-        val values = ContentValues()
-
-        values.put(MEDICINE_NAME, name)
-        values.put(DOSAGE, dosage)
-        values.put(START_DATE, startDate)
-        values.put(END_DATE, endDate)
-        values.put(REMINDER_TIME, reminderTime)
-        values.put(FREQUENCY, frequency)
-        values.put(NOTES, notes)
-
-        val result = db.insert(
-            TABLE_MEDICINES,
-            null,
-            values
-        )
-
-        return result != -1L
-    }
-
-    fun getAllMedicines(): Cursor {
-
-        val db = readableDatabase
-
-        return db.rawQuery(
-            "SELECT * FROM $TABLE_MEDICINES ORDER BY $ID DESC",
-            null
-        )
-    }
-
-    // ---------------- PRESCRIPTION ----------------
-
+    // Insert complete prescription with multiple medicines
     fun insertPrescription(
         doctorName: String,
         date: String,
-        diagnosis: String,
-        details: String
-    ): Boolean {
+        disease: String,
+        medicines: MutableList<PrescriptionMedicine>
+    ): Long {
+
+        val db = writableDatabase
+
+        db.beginTransaction()
+
+        try {
+
+            // Insert prescription
+            val prescriptionValues = ContentValues()
+
+            prescriptionValues.put(
+                "doctor_name",
+                doctorName
+            )
+
+            prescriptionValues.put(
+                "disease",
+                disease
+            )
+
+            prescriptionValues.put(
+                "prescription_date",
+                date
+            )
+
+            val prescriptionId =
+                db.insert(
+                    "prescriptions",
+                    null,
+                    prescriptionValues
+                )
+
+            if (prescriptionId == -1L) {
+                return -1L
+            }
+
+            // Insert medicines
+            for (medicine in medicines) {
+
+                val medicineValues =
+                    ContentValues()
+
+                medicineValues.put(
+                    "prescription_id",
+                    prescriptionId
+                )
+
+                medicineValues.put(
+                    "medicine_name",
+                    medicine.medicineName
+                )
+
+                medicineValues.put(
+                    "dosage",
+                    medicine.dosage
+                )
+
+                medicineValues.put(
+                    "frequency",
+                    medicine.frequency
+                )
+
+                medicineValues.put(
+                    "frequency_count",
+                    medicine.frequencyCount
+                )
+
+                medicineValues.put(
+                    "duration_days",
+                    medicine.durationDays
+                )
+
+                medicineValues.put(
+                    "reminder_times",
+                    medicine.reminderTimes
+                )
+
+                medicineValues.put(
+                    "taken_count",
+                    0
+                )
+
+                val medicineId =
+                    db.insert(
+                        "prescription_medicines",
+                        null,
+                        medicineValues
+                    )
+
+                if (medicineId == -1L) {
+                    return -1L
+                }
+
+                // Store generated database ID
+                medicine.id = medicineId
+            }
+
+            db.setTransactionSuccessful()
+
+            return prescriptionId
+
+        } finally {
+
+            db.endTransaction()
+        }
+    }
+
+    // Get all prescriptions
+    fun getAllPrescriptions(): Cursor {
+
+        val db = readableDatabase
+
+        return db.query(
+            "prescriptions",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "id DESC"
+        )
+    }
+
+    // Get one prescription
+    fun getPrescription(
+        prescriptionId: Long
+    ): Cursor {
+
+        val db = readableDatabase
+
+        return db.query(
+            "prescriptions",
+            null,
+            "id = ?",
+            arrayOf(
+                prescriptionId.toString()
+            ),
+            null,
+            null,
+            null
+        )
+    }
+
+    // Get medicines of a prescription
+    fun getPrescriptionMedicines(
+        prescriptionId: Long
+    ): Cursor {
+
+        val db = readableDatabase
+
+        return db.query(
+            "prescription_medicines",
+            null,
+            "prescription_id = ?",
+            arrayOf(
+                prescriptionId.toString()
+            ),
+            null,
+            null,
+            "id ASC"
+        )
+    }
+
+    // Update medicine taken count
+    fun updateTakenCount(
+        medicineId: Long,
+        takenCount: Int
+    ) {
 
         val db = writableDatabase
 
         val values = ContentValues()
 
-        values.put(DOCTOR_NAME, doctorName)
-        values.put(PRESCRIPTION_DATE, date)
-        values.put(DIAGNOSIS, diagnosis)
-        values.put(PRESCRIPTION_DETAILS, details)
-
-        val result = db.insert(
-            TABLE_PRESCRIPTION,
-            null,
-            values
+        values.put(
+            "taken_count",
+            takenCount
         )
 
-        return result != -1L
+        db.update(
+            "prescription_medicines",
+            values,
+            "id = ?",
+            arrayOf(
+                medicineId.toString()
+            )
+        )
     }
 
-    fun getLatestPrescription(): Cursor {
+    // Get medicine taken count
+    fun getTakenCount(
+        medicineId: Long
+    ): Int {
 
         val db = readableDatabase
 
-        return db.rawQuery(
-            "SELECT * FROM $TABLE_PRESCRIPTION ORDER BY $PRESCRIPTION_ID DESC LIMIT 1",
-            null
-        )
+        val cursor =
+            db.query(
+                "prescription_medicines",
+                arrayOf("taken_count"),
+                "id = ?",
+                arrayOf(
+                    medicineId.toString()
+                ),
+                null,
+                null,
+                null
+            )
+
+        var count = 0
+
+        if (cursor.moveToFirst()) {
+
+            count =
+                cursor.getInt(
+                    cursor.getColumnIndexOrThrow(
+                        "taken_count"
+                    )
+                )
+        }
+
+        cursor.close()
+
+        return count
     }
 }

@@ -12,72 +12,86 @@ import com.google.android.material.button.MaterialButton
 class MedicinesActivity : AppCompatActivity() {
 
     private lateinit var txtBack: TextView
-    private lateinit var recyclerMedicines: RecyclerView
-    private lateinit var btnAddMedicine: MaterialButton
+    private lateinit var recyclerPrescriptions: RecyclerView
+    private lateinit var btnAddPrescription: MaterialButton
 
     private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var medicineAdapter: MedicineAdapter
-
+    private lateinit var prescriptionAdapter: PrescriptionAdapter
     private lateinit var cursor: Cursor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_medicines)
+        setContentView(
+            R.layout.activity_medicines
+        )
 
-        txtBack = findViewById(R.id.txtBack)
-        recyclerMedicines = findViewById(R.id.recyclerMedicines)
-        btnAddMedicine = findViewById(R.id.btnAddMedicine)
+        txtBack =
+            findViewById(R.id.txtBack)
 
-        databaseHelper = DatabaseHelper(this)
+        recyclerPrescriptions =
+            findViewById(R.id.recyclerMedicines)
 
-        recyclerMedicines.layoutManager =
+        btnAddPrescription =
+            findViewById(R.id.btnAddMedicine)
+
+        databaseHelper =
+            DatabaseHelper(this)
+
+        recyclerPrescriptions.layoutManager =
             LinearLayoutManager(this)
 
-        loadMedicines()
+        loadPrescriptions()
 
-        // Back button
         txtBack.setOnClickListener {
             finish()
         }
 
-        // Add Medicine
-        btnAddMedicine.setOnClickListener {
+        btnAddPrescription.setOnClickListener {
 
-            val intent = Intent(
-                this,
-                AddMedicineActivity::class.java
+            startActivity(
+                Intent(
+                    this,
+                    PrescriptionActivity::class.java
+                )
             )
-
-            startActivity(intent)
         }
     }
 
-    private fun loadMedicines() {
+    private fun loadPrescriptions() {
 
-        cursor = databaseHelper.getAllMedicines()
+        cursor =
+            databaseHelper.getAllPrescriptions()
 
-        medicineAdapter = MedicineAdapter(cursor)
+        prescriptionAdapter =
+            PrescriptionAdapter(cursor)
 
-        recyclerMedicines.adapter = medicineAdapter
+        recyclerPrescriptions.adapter =
+            prescriptionAdapter
     }
 
     override fun onResume() {
+
         super.onResume()
 
-        if (::databaseHelper.isInitialized &&
-            ::medicineAdapter.isInitialized
+        if (
+            ::databaseHelper.isInitialized &&
+            ::prescriptionAdapter.isInitialized
         ) {
-            val newCursor =
-                databaseHelper.getAllMedicines()
 
-            medicineAdapter.updateCursor(newCursor)
+            val newCursor =
+                databaseHelper.getAllPrescriptions()
+
+            prescriptionAdapter.updateCursor(
+                newCursor
+            )
         }
     }
 
     override fun onDestroy() {
 
-        if (::cursor.isInitialized &&
+        if (
+            ::cursor.isInitialized &&
             !cursor.isClosed
         ) {
             cursor.close()

@@ -8,7 +8,6 @@
     android:background="#F7FAFC"
     android:padding="20dp">
 
-    <!-- Back Button -->
     <TextView
         android:id="@+id/txtBack"
         android:layout_width="40dp"
@@ -21,12 +20,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Page Title -->
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Medicines"
+        android:text="My Prescription"
         android:textColor="#172554"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -34,20 +32,18 @@
         app:layout_constraintStart_toEndOf="@id/txtBack"
         app:layout_constraintTop_toTopOf="@id/txtBack" />
 
-    <!-- Subtitle -->
     <TextView
         android:id="@+id/txtSubtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Keep track of your daily medicines"
+        android:text="Track your prescription and medicines"
         android:textColor="#64748B"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtBack" />
 
-    <!-- Medicine List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMedicines"
         android:layout_width="0dp"
@@ -60,13 +56,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtSubtitle" />
 
-    <!-- Add Medicine Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddMedicine"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginBottom="20dp"
-        android:text="+  Add Medicine"
+        android:text="+  Add Prescription"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"

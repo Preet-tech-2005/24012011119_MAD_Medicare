@@ -7,7 +7,6 @@ import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var btnMedicines: MaterialButton
     private lateinit var btnPrescription: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,38 +14,17 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        btnMedicines =
-            findViewById(R.id.btnMedicines)
-
         btnPrescription =
             findViewById(R.id.btnPrescription)
 
+        btnPrescription.setOnClickListener {
 
-        // My Medicines
-
-        btnMedicines.setOnClickListener {
-
-            val intent =
+            startActivity(
                 Intent(
                     this,
                     MedicinesActivity::class.java
                 )
-
-            startActivity(intent)
-        }
-
-
-        // Prescription
-
-        btnPrescription.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    PrescriptionActivity::class.java
-                )
-
-            startActivity(intent)
+            )
         }
     }
 }

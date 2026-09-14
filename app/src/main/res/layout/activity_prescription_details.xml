@@ -8,6 +8,8 @@
     android:background="#F7FAFC"
     android:padding="20dp">
 
+    <!-- Back Button -->
+
     <TextView
         android:id="@+id/txtBack"
         android:layout_width="40dp"
@@ -20,119 +22,190 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Title -->
+
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Prescription Details"
+        android:layout_marginStart="10dp"
+        android:text="My Prescription"
         android:textColor="#172554"
-        android:textSize="24sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/txtBack"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtBack"
         app:layout_constraintTop_toTopOf="@id/txtBack" />
 
-    <TextView
-        android:id="@+id/txtDoctorLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="Doctor Name"
-        android:textColor="#64748B"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtBack" />
+    <!-- Doctor -->
 
     <TextView
         android:id="@+id/txtDoctorName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Dr. Rahul Patel"
-        android:textColor="#172554"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        android:text="Doctor: Dr. Patel"
+        android:textColor="#334155"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDoctorLabel" />
+        app:layout_constraintTop_toBottomOf="@id/txtBack" />
 
-    <TextView
-        android:id="@+id/txtDateLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="Prescription Date"
-        android:textColor="#64748B"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDoctorName" />
-
-    <TextView
-        android:id="@+id/txtPrescriptionDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="09/09/2026"
-        android:textColor="#172554"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDateLabel" />
-
-    <TextView
-        android:id="@+id/txtDiagnosisLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="Diagnosis"
-        android:textColor="#64748B"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtPrescriptionDate" />
+    <!-- Diagnosis -->
 
     <TextView
         android:id="@+id/txtDiagnosis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Fever"
-        android:textColor="#172554"
-        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:text="Diagnosis: Fever"
+        android:textColor="#334155"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDiagnosisLabel" />
+        app:layout_constraintTop_toBottomOf="@id/txtDoctorName" />
+
+    <!-- Date -->
 
     <TextView
-        android:id="@+id/txtDetailsLabel"
+        android:id="@+id/txtPrescriptionDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="Prescription Details"
+        android:layout_marginTop="8dp"
+        android:text="Date: 14/09/2026"
         android:textColor="#64748B"
-        android:textSize="13sp"
-        android:textStyle="bold"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtDiagnosis" />
 
-    <TextView
-        android:id="@+id/txtPrescriptionDetails"
+    <!-- Medicine Card -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/medicineCard"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="210dp"
+        android:layout_marginTop="25dp"
         android:background="#FFFFFF"
         android:padding="18dp"
-        android:text="Paracetamol 500 mg&#10;Take twice daily after food"
-        android:textColor="#334155"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDetailsLabel" />
+        app:layout_constraintTop_toBottomOf="@id/txtPrescriptionDate">
+
+        <!-- Medicine Name -->
+
+        <TextView
+            android:id="@+id/txtMedicineName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cetirizine"
+            android:textColor="#172554"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Dosage -->
+
+        <TextView
+            android:id="@+id/txtDosage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Dosage: 10 mg"
+            android:textColor="#334155"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtMedicineName" />
+
+        <!-- Frequency -->
+
+        <TextView
+            android:id="@+id/txtFrequency"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Frequency: Once daily"
+            android:textColor="#334155"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDosage" />
+
+        <!-- Duration -->
+
+        <TextView
+            android:id="@+id/txtDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Duration: 3 days"
+            android:textColor="#334155"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtFrequency" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Progress -->
+
+    <TextView
+        android:id="@+id/txtProgressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Medicine Progress"
+        android:textColor="#172554"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/medicineCard" />
+
+    <TextView
+        android:id="@+id/txtProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="0 / 3"
+        android:textColor="#2563EB"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtProgressLabel" />
+
+    <!-- Remaining -->
+
+    <TextView
+        android:id="@+id/txtRemaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Remaining: 3"
+        android:textColor="#64748B"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/txtProgress"
+        app:layout_constraintStart_toEndOf="@id/txtProgress"
+        app:layout_constraintTop_toTopOf="@id/txtProgress" />
+
+    <!-- Taken Button -->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTaken"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:text="Mark as Taken"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#2563EB"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtProgress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

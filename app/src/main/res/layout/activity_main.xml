@@ -8,8 +8,6 @@
     android:background="#F7FAFC"
     android:padding="20dp">
 
-    <!-- App Name -->
-
     <TextView
         android:id="@+id/txtAppName"
         android:layout_width="wrap_content"
@@ -21,104 +19,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!-- Subtitle -->
-
     <TextView
         android:id="@+id/txtWelcome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Medicine Reminder &amp; Prescription Tracker"
+        android:text="Prescription &amp; Medicine Tracker"
         android:textColor="#64748B"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtAppName" />
 
-
-    <!-- Medicine Card -->
-
     <TextView
-        android:id="@+id/txtMedicineIcon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:id="@+id/txtPrescriptionIcon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
         android:background="#DBEAFE"
         android:gravity="center"
         android:text="💊"
-        android:textSize="35sp"
+        android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtWelcome" />
-
-
-    <TextView
-        android:id="@+id/txtMedicineTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:text="My Medicines"
-        android:textColor="#172554"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/txtMedicineIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtMedicineIcon"
-        app:layout_constraintTop_toTopOf="@id/txtMedicineIcon" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMedicines"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:text="My Medicines"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:backgroundTint="#2563EB"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMedicineIcon" />
-
-
-    <!-- Prescription -->
-
-    <TextView
-        android:id="@+id/txtPrescriptionIcon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="30dp"
-        android:background="#DBEAFE"
-        android:gravity="center"
-        android:text="📋"
-        android:textSize="35sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnMedicines" />
-
 
     <TextView
         android:id="@+id/txtPrescriptionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:text="Prescription"
+        android:text="My Prescription"
         android:textColor="#172554"
-        android:textSize="20sp"
+        android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/txtPrescriptionIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtPrescriptionIcon"
         app:layout_constraintTop_toTopOf="@id/txtPrescriptionIcon" />
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPrescription"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:text="Prescription"
+        android:layout_height="58dp"
+        android:layout_marginTop="25dp"
+        android:text="My Prescription"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
