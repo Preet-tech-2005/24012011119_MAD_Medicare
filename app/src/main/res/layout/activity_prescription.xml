@@ -8,6 +8,7 @@
     android:background="#F7FAFC"
     android:padding="20dp">
 
+    <!-- Back Button -->
     <TextView
         android:id="@+id/txtBack"
         android:layout_width="40dp"
@@ -20,222 +21,213 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Title -->
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="Add Prescription"
         android:textColor="#172554"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/txtBack"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtBack"
         app:layout_constraintTop_toTopOf="@id/txtBack" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/doctorLayout"
+    <!-- Doctor Name -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtDoctorName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:hint="Doctor Name"
-        app:boxBackgroundMode="outline"
+        android:inputType="textPersonName"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtBack">
+        app:layout_constraintTop_toBottomOf="@id/txtBack" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDoctorName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/diseaseLayout"
+    <!-- Disease -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtDisease"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:hint="Disease / Diagnosis"
-        app:boxBackgroundMode="outline"
+        android:inputType="text"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/doctorLayout">
+        app:layout_constraintTop_toBottomOf="@id/edtDoctorName" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDisease"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dateLayout"
+    <!-- Prescription Date -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtPrescriptionDate"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="false"
         android:hint="Prescription Date"
-        app:boxBackgroundMode="outline"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diseaseLayout">
+        app:layout_constraintTop_toBottomOf="@id/edtDisease" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtPrescriptionDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:clickable="true" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+    <!-- Medicine Heading -->
     <TextView
         android:id="@+id/txtMedicineHeading"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Add Medicine"
+        android:text="Medicine Details"
         android:textColor="#172554"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateLayout" />
+        app:layout_constraintTop_toBottomOf="@id/edtPrescriptionDate" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/medicineLayout"
+    <!-- Medicine Name -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtMedicineName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:hint="Medicine Name"
-        app:boxBackgroundMode="outline"
+        android:inputType="text"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMedicineHeading">
+        app:layout_constraintTop_toBottomOf="@id/txtMedicineHeading" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtMedicineName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dosageLayout"
+    <!-- Dosage -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtDosage"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:hint="Dosage"
-        app:boxBackgroundMode="outline"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Dosage (e.g. 500 mg)"
+        android:inputType="text"
+        android:padding="12dp"
+        app:layout_constraintEnd_toStartOf="@id/edtFrequency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/medicineLayout">
+        app:layout_constraintTop_toBottomOf="@id/edtMedicineName" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDosage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/frequencyLayout"
+    <!-- Frequency -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtFrequency"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Frequency (e.g. Once Daily)"
-        app:boxBackgroundMode="outline"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:hint="Frequency"
+        android:inputType="text"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dosageLayout">
+        app:layout_constraintStart_toEndOf="@id/edtDosage"
+        app:layout_constraintTop_toTopOf="@id/edtDosage" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtFrequency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/durationLayout"
+    <!-- Duration -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtDuration"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:hint="Duration (days)"
-        app:boxBackgroundMode="outline"
+        android:inputType="number"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frequencyLayout">
+        app:layout_constraintTop_toBottomOf="@id/edtDosage" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDuration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/timeLayout"
+    <!-- Reminder Time 1 -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtReminderTime1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:hint="Medicine Time"
-        app:boxBackgroundMode="outline"
+        android:focusable="false"
+        android:hint="Reminder Time 1"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/durationLayout">
+        app:layout_constraintTop_toBottomOf="@id/edtDuration" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtReminderTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:clickable="true" />
+    <!-- Reminder Time 2 -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtReminderTime2"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:focusable="false"
+        android:hint="Reminder Time 2"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtReminderTime1" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Reminder Time 3 -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtReminderTime3"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:focusable="false"
+        android:hint="Reminder Time 3"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtReminderTime2" />
 
+    <!-- Add Medicine Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddMedicine"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:text="+ Add Medicine"
-        android:textColor="#2563EB"
-        app:backgroundTint="#DBEAFE"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="#2563EB"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeLayout" />
+        app:layout_constraintTop_toBottomOf="@id/edtReminderTime3" />
 
+    <!-- Added Medicines -->
     <TextView
         android:id="@+id/txtAddedMedicines"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
-        android:padding="12dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:background="#DBEAFE"
+        android:padding="10dp"
         android:text="Added Medicines:"
-        android:textColor="#334155"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@id/btnSavePrescription"
+        android:textColor="#172554"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnAddMedicine" />
 
+    <!-- Save Prescription -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSavePrescription"
         android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:text="Save Prescription"
         android:textColor="#FFFFFF"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:backgroundTint="#2563EB"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="#16A34A"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtAddedMedicines" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

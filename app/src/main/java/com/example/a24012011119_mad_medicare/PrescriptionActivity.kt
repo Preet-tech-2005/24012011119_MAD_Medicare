@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +26,10 @@ class PrescriptionActivity : AppCompatActivity() {
     private lateinit var edtDosage: TextInputEditText
     private lateinit var edtFrequency: TextInputEditText
     private lateinit var edtDuration: TextInputEditText
-    private lateinit var edtReminderTime: TextInputEditText
+
+    private lateinit var edtReminderTime1: TextInputEditText
+    private lateinit var edtReminderTime2: TextInputEditText
+    private lateinit var edtReminderTime3: TextInputEditText
 
     private lateinit var txtAddedMedicines: TextView
 
@@ -40,9 +44,12 @@ class PrescriptionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_prescription)
+        setContentView(
+            R.layout.activity_prescription
+        )
 
-        databaseHelper = DatabaseHelper(this)
+        databaseHelper =
+            DatabaseHelper(this)
 
         txtBack =
             findViewById(R.id.txtBack)
@@ -68,8 +75,14 @@ class PrescriptionActivity : AppCompatActivity() {
         edtDuration =
             findViewById(R.id.edtDuration)
 
-        edtReminderTime =
-            findViewById(R.id.edtReminderTime)
+        edtReminderTime1 =
+            findViewById(R.id.edtReminderTime1)
+
+        edtReminderTime2 =
+            findViewById(R.id.edtReminderTime2)
+
+        edtReminderTime3 =
+            findViewById(R.id.edtReminderTime3)
 
         txtAddedMedicines =
             findViewById(R.id.txtAddedMedicines)
@@ -80,14 +93,29 @@ class PrescriptionActivity : AppCompatActivity() {
         btnSavePrescription =
             findViewById(R.id.btnSavePrescription)
 
-
-        // Back button
         txtBack.setOnClickListener {
             finish()
         }
 
+        setupDatePicker()
 
-        // Prescription date
+        setupTimePicker(edtReminderTime1)
+        setupTimePicker(edtReminderTime2)
+        setupTimePicker(edtReminderTime3)
+
+        setupFrequency()
+
+        btnAddMedicine.setOnClickListener {
+            addMedicine()
+        }
+
+        btnSavePrescription.setOnClickListener {
+            savePrescription()
+        }
+    }
+
+    private fun setupDatePicker() {
+
         edtPrescriptionDate.setOnClickListener {
 
             val calendar =
@@ -105,12 +133,16 @@ class PrescriptionActivity : AppCompatActivity() {
             val dialog =
                 android.app.DatePickerDialog(
                     this,
-                    { _, selectedYear, selectedMonth, selectedDay ->
+                    { _, selectedYear,
+                      selectedMonth,
+                      selectedDay ->
 
                         val date =
                             "$selectedDay/${selectedMonth + 1}/$selectedYear"
 
-                        edtPrescriptionDate.setText(date)
+                        edtPrescriptionDate.setText(
+                            date
+                        )
                     },
                     year,
                     month,
@@ -119,10 +151,13 @@ class PrescriptionActivity : AppCompatActivity() {
 
             dialog.show()
         }
+    }
 
+    private fun setupTimePicker(
+        editText: TextInputEditText
+    ) {
 
-        // Medicine reminder time
-        edtReminderTime.setOnClickListener {
+        editText.setOnClickListener {
 
             val calendar =
                 Calendar.getInstance()
@@ -136,7 +171,8 @@ class PrescriptionActivity : AppCompatActivity() {
             val dialog =
                 TimePickerDialog(
                     this,
-                    { _, selectedHour, selectedMinute ->
+                    { _, selectedHour,
+                      selectedMinute ->
 
                         val amPm =
                             if (selectedHour >= 12) {
@@ -160,7 +196,7 @@ class PrescriptionActivity : AppCompatActivity() {
                                 amPm
                             )
 
-                        edtReminderTime.setText(time)
+                        editText.setText(time)
                     },
                     hour,
                     minute,
@@ -169,22 +205,101 @@ class PrescriptionActivity : AppCompatActivity() {
 
             dialog.show()
         }
+    }
 
+    private fun setupFrequency() {
 
-        // Add medicine
-        btnAddMedicine.setOnClickListener {
+        edtFrequency.addTextChangedListener(
+            object : android.text.TextWatcher {
 
-            addMedicine()
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+
+                    updateReminderFields(
+                        s.toString()
+                    )
+                }
+
+                override fun afterTextChanged(
+                    s: android.text.Editable?
+                ) {
+                }
+            }
+        )
+    }
+
+    private fun updateReminderFields(
+        frequency: String
+    ) {
+
+        val value =
+            frequency.lowercase().trim()
+
+        val frequencyCount =
+            getFrequencyCount(value)
+
+        if (frequencyCount >= 2) {
+
+            edtReminderTime2.visibility =
+                View.VISIBLE
+
+        } else {
+
+            edtReminderTime2.visibility =
+                View.GONE
+
+            edtReminderTime2.text = null
         }
 
+        if (frequencyCount >= 3) {
 
-        // Save prescription
-        btnSavePrescription.setOnClickListener {
+            edtReminderTime3.visibility =
+                View.VISIBLE
 
-            savePrescription()
+        } else {
+
+            edtReminderTime3.visibility =
+                View.GONE
+
+            edtReminderTime3.text = null
         }
     }
 
+    private fun getFrequencyCount(
+        frequency: String
+    ): Int {
+
+        return when {
+
+            frequency.contains("thrice") ||
+                    frequency.contains("three") ||
+                    frequency.contains("3") -> {
+                3
+            }
+
+            frequency.contains("twice") ||
+                    frequency.contains("two") ||
+                    frequency.contains("2") -> {
+                2
+            }
+
+            else -> {
+                1
+            }
+        }
+    }
 
     private fun addMedicine() {
 
@@ -200,9 +315,16 @@ class PrescriptionActivity : AppCompatActivity() {
         val durationText =
             edtDuration.text.toString().trim()
 
-        val reminderTime =
-            edtReminderTime.text.toString().trim()
+        val time1 =
+            edtReminderTime1.text.toString().trim()
 
+        val time2 =
+            edtReminderTime2.text.toString().trim()
+
+        val time3 =
+            edtReminderTime3.text.toString().trim()
+
+        // Validation
 
         if (medicineName.isEmpty()) {
 
@@ -236,19 +358,21 @@ class PrescriptionActivity : AppCompatActivity() {
             return
         }
 
-        if (reminderTime.isEmpty()) {
+        if (time1.isEmpty()) {
 
-            edtReminderTime.error =
+            edtReminderTime1.error =
                 "Select reminder time"
 
             return
         }
 
-
         val durationDays =
             durationText.toIntOrNull()
 
-        if (durationDays == null || durationDays <= 0) {
+        if (
+            durationDays == null ||
+            durationDays <= 0
+        ) {
 
             edtDuration.error =
                 "Enter valid number of days"
@@ -256,49 +380,117 @@ class PrescriptionActivity : AppCompatActivity() {
             return
         }
 
-
         val frequencyCount =
-            getFrequencyCount(frequency)
+            getFrequencyCount(
+                frequency.lowercase()
+            )
 
+        if (
+            frequencyCount >= 2 &&
+            time2.isEmpty()
+        ) {
+
+            edtReminderTime2.error =
+                "Select reminder time"
+
+            return
+        }
+
+        if (
+            frequencyCount >= 3 &&
+            time3.isEmpty()
+        ) {
+
+            edtReminderTime3.error =
+                "Select reminder time"
+
+            return
+        }
+
+        // Create reminder time string
+
+        var reminderTimes =
+            time1
+
+        if (frequencyCount >= 2) {
+
+            reminderTimes =
+                "$reminderTimes|$time2"
+        }
+
+        if (frequencyCount >= 3) {
+
+            reminderTimes =
+                "$reminderTimes|$time3"
+        }
+
+        // Create medicine object
 
         val medicine =
             PrescriptionMedicine(
+                medicineName =
+                    medicineName,
 
-                medicineName = medicineName,
+                dosage =
+                    dosage,
 
-                dosage = dosage,
+                frequency =
+                    frequency,
 
-                frequency = frequency,
+                frequencyCount =
+                    frequencyCount,
 
-                frequencyCount = frequencyCount,
+                durationDays =
+                    durationDays,
 
-                durationDays = durationDays,
+                reminderTimes =
+                    reminderTimes,
 
-                reminderTimes = reminderTime
+                takenCount =
+                    0
             )
 
+        // IMPORTANT:
+        // Add medicine to list
 
-        medicines.add(medicine)
+        medicines.add(
+            medicine
+        )
 
+        // Update displayed list
 
         updateMedicineList()
 
+        // Show count
 
-        // Clear medicine fields
+        Toast.makeText(
+            this,
+            "Medicine ${medicines.size} added",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        // Clear only medicine form
+
+        clearMedicineFields()
+    }
+
+    private fun clearMedicineFields() {
+
         edtMedicineName.text = null
         edtDosage.text = null
         edtFrequency.text = null
         edtDuration.text = null
-        edtReminderTime.text = null
 
+        edtReminderTime1.text = null
+        edtReminderTime2.text = null
+        edtReminderTime3.text = null
 
-        Toast.makeText(
-            this,
-            "Medicine added",
-            Toast.LENGTH_SHORT
-        ).show()
+        edtReminderTime2.visibility =
+            View.GONE
+
+        edtReminderTime3.visibility =
+            View.GONE
     }
-
 
     private fun updateMedicineList() {
 
@@ -323,13 +515,19 @@ class PrescriptionActivity : AppCompatActivity() {
                 "Duration: ${medicine.durationDays} days\n"
 
             text +=
-                "Reminder: ${medicine.reminderTimes}\n\n"
+                "Reminder: " +
+                        medicine.reminderTimes
+                            .replace(
+                                "|",
+                                ", "
+                            )
+
+            text += "\n\n"
         }
 
         txtAddedMedicines.text =
             text
     }
-
 
     private fun savePrescription() {
 
@@ -341,7 +539,6 @@ class PrescriptionActivity : AppCompatActivity() {
 
         val prescriptionDate =
             edtPrescriptionDate.text.toString().trim()
-
 
         if (doctorName.isEmpty()) {
 
@@ -378,6 +575,7 @@ class PrescriptionActivity : AppCompatActivity() {
             return
         }
 
+        // Save ALL medicines
 
         val prescriptionId =
             databaseHelper.insertPrescription(
@@ -387,26 +585,23 @@ class PrescriptionActivity : AppCompatActivity() {
                 medicines
             )
 
-
         if (prescriptionId != -1L) {
 
-            // Set reminder for every medicine
+            // Set alarm for every medicine
+
             for (medicine in medicines) {
 
-                setMedicineAlarm(
+                setMedicineAlarms(
                     medicine
                 )
             }
 
-
             Toast.makeText(
                 this,
-                "Prescription saved successfully",
+                "${medicines.size} medicines saved successfully",
                 Toast.LENGTH_LONG
             ).show()
 
-
-            // Open prescription details
             val intent =
                 Intent(
                     this,
@@ -432,38 +627,35 @@ class PrescriptionActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun getFrequencyCount(
-        frequency: String
-    ): Int {
-
-        val value =
-            frequency.lowercase()
-
-        return when {
-
-            value.contains("twice") ||
-                    value.contains("two") -> 2
-
-            value.contains("thrice") ||
-                    value.contains("three") -> 3
-
-            else -> 1
-        }
-    }
-
-
-    private fun setMedicineAlarm(
+    private fun setMedicineAlarms(
         medicine: PrescriptionMedicine
     ) {
 
-        val time =
-            medicine.reminderTimes
+        val times =
+            medicine.reminderTimes.split("|")
+
+        for (time in times) {
+
+            setSingleMedicineAlarm(
+                medicine,
+                time
+            )
+        }
+    }
+
+    private fun setSingleMedicineAlarm(
+        medicine: PrescriptionMedicine,
+        time: String
+    ) {
 
         try {
 
             val parts =
                 time.split(" ")
+
+            if (parts.size < 2) {
+                return
+            }
 
             val timeParts =
                 parts[0].split(":")
@@ -477,25 +669,27 @@ class PrescriptionActivity : AppCompatActivity() {
             val amPm =
                 parts[1]
 
-
-            if (amPm.equals(
+            if (
+                amPm.equals(
                     "PM",
                     ignoreCase = true
-                ) && hour != 12
+                ) &&
+                hour != 12
             ) {
 
                 hour += 12
             }
 
-            if (amPm.equals(
+            if (
+                amPm.equals(
                     "AM",
                     ignoreCase = true
-                ) && hour == 12
+                ) &&
+                hour == 12
             ) {
 
                 hour = 0
             }
-
 
             val calendar =
                 Calendar.getInstance()
@@ -520,12 +714,9 @@ class PrescriptionActivity : AppCompatActivity() {
                 0
             )
 
-
-            // If selected time already passed,
-            // schedule it for tomorrow.
             if (
-                calendar.timeInMillis
-                <= System.currentTimeMillis()
+                calendar.timeInMillis <=
+                System.currentTimeMillis()
             ) {
 
                 calendar.add(
@@ -534,12 +725,10 @@ class PrescriptionActivity : AppCompatActivity() {
                 )
             }
 
-
             val alarmManager =
                 getSystemService(
                     Context.ALARM_SERVICE
                 ) as AlarmManager
-
 
             val intent =
                 Intent(
@@ -552,10 +741,12 @@ class PrescriptionActivity : AppCompatActivity() {
                 medicine.medicineName
             )
 
-
             val requestCode =
-                medicine.medicineName.hashCode()
-
+                (
+                        medicine.medicineName +
+                                "_" +
+                                time
+                        ).hashCode()
 
             val pendingIntent =
                 PendingIntent.getBroadcast(
@@ -565,7 +756,6 @@ class PrescriptionActivity : AppCompatActivity() {
                     PendingIntent.FLAG_UPDATE_CURRENT or
                             PendingIntent.FLAG_IMMUTABLE
                 )
-
 
             alarmManager.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
@@ -582,7 +772,6 @@ class PrescriptionActivity : AppCompatActivity() {
             ).show()
         }
     }
-
 
     override fun onDestroy() {
 

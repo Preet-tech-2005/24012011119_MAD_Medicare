@@ -5,15 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7FAFC"
-    android:padding="20dp">
+    android:background="#F7FAFC">
 
     <!-- Back Button -->
-
     <TextView
         android:id="@+id/txtBack"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="5dp"
         android:gravity="center"
         android:text="‹"
         android:textColor="#172554"
@@ -23,15 +22,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Title -->
-
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="My Prescription"
+        android:layout_marginStart="8dp"
+        android:text="Prescription Details"
         android:textColor="#172554"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/txtBack"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,173 +37,75 @@
         app:layout_constraintTop_toTopOf="@id/txtBack" />
 
     <!-- Doctor -->
-
     <TextView
         android:id="@+id/txtDoctorName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Doctor: Dr. Patel"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="18dp"
+        android:text="Doctor: Dr. Neha Shah"
         android:textColor="#334155"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtBack" />
 
     <!-- Diagnosis -->
-
     <TextView
         android:id="@+id/txtDiagnosis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Diagnosis: Fever"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="6dp"
+        android:text="Diagnosis: Common Cold"
         android:textColor="#334155"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtDoctorName" />
 
-    <!-- Date -->
-
+    <!-- Prescription Date -->
     <TextView
         android:id="@+id/txtPrescriptionDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Date: 14/09/2026"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="6dp"
+        android:text="Prescription Date: 14/09/2026"
         android:textColor="#64748B"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtDiagnosis" />
 
-    <!-- Medicine Card -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/medicineCard"
-        android:layout_width="0dp"
-        android:layout_height="210dp"
-        android:layout_marginTop="25dp"
-        android:background="#FFFFFF"
-        android:padding="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtPrescriptionDate">
-
-        <!-- Medicine Name -->
-
-        <TextView
-            android:id="@+id/txtMedicineName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Cetirizine"
-            android:textColor="#172554"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Dosage -->
-
-        <TextView
-            android:id="@+id/txtDosage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Dosage: 10 mg"
-            android:textColor="#334155"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtMedicineName" />
-
-        <!-- Frequency -->
-
-        <TextView
-            android:id="@+id/txtFrequency"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="Frequency: Once daily"
-            android:textColor="#334155"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtDosage" />
-
-        <!-- Duration -->
-
-        <TextView
-            android:id="@+id/txtDuration"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="Duration: 3 days"
-            android:textColor="#334155"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtFrequency" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Progress -->
-
+    <!-- Medicines Heading -->
     <TextView
-        android:id="@+id/txtProgressLabel"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtMedicinesHeading"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Medicine Progress"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="18dp"
+        android:text="Medicines"
         android:textColor="#172554"
-        android:textSize="16sp"
+        android:textSize="19sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/medicineCard" />
-
-    <TextView
-        android:id="@+id/txtProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="0 / 3"
-        android:textColor="#2563EB"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtProgressLabel" />
-
-    <!-- Remaining -->
-
-    <TextView
-        android:id="@+id/txtRemaining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="Remaining: 3"
-        android:textColor="#64748B"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@id/txtProgress"
-        app:layout_constraintStart_toEndOf="@id/txtProgress"
-        app:layout_constraintTop_toTopOf="@id/txtProgress" />
-
-    <!-- Taken Button -->
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnTaken"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:text="Mark as Taken"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:backgroundTint="#2563EB"
-        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtProgress" />
+        app:layout_constraintTop_toBottomOf="@id/txtPrescriptionDate" />
+
+    <!-- All Medicines -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPrescriptionMedicines"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:clipToPadding="false"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMedicinesHeading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
