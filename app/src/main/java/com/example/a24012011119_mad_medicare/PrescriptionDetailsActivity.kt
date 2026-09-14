@@ -3,9 +3,7 @@ package com.example.a24012011119_mad_medicare
 import android.database.Cursor
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 
 class PrescriptionDetailsActivity : AppCompatActivity() {
 
@@ -23,7 +21,7 @@ class PrescriptionDetailsActivity : AppCompatActivity() {
     private lateinit var txtProgress: TextView
     private lateinit var txtRemaining: TextView
 
-    private lateinit var btnTaken: MaterialButton
+    private lateinit var btnTaken: com.google.android.material.button.MaterialButton
 
     private lateinit var databaseHelper: DatabaseHelper
 
@@ -45,14 +43,12 @@ class PrescriptionDetailsActivity : AppCompatActivity() {
         databaseHelper =
             DatabaseHelper(this)
 
-        // Get prescription ID
         prescriptionId =
             intent.getLongExtra(
                 "prescription_id",
                 0
             )
 
-        // Find views
         txtBack =
             findViewById(R.id.txtBack)
 
@@ -86,33 +82,25 @@ class PrescriptionDetailsActivity : AppCompatActivity() {
         btnTaken =
             findViewById(R.id.btnTaken)
 
-
-        // Back
         txtBack.setOnClickListener {
-
             finish()
         }
 
-
         loadPrescription()
 
-
-        // Mark medicine as taken
         btnTaken.setOnClickListener {
-
             markMedicineTaken()
         }
     }
 
-
     private fun loadPrescription() {
 
-        // Get prescription
+        // Load prescription information
+
         val prescriptionCursor: Cursor =
             databaseHelper.getPrescription(
                 prescriptionId
             )
-
 
         if (prescriptionCursor.moveToFirst()) {
 
@@ -140,7 +128,6 @@ class PrescriptionDetailsActivity : AppCompatActivity() {
                         )
                 )
 
-
             txtDoctorName.text =
                 "Doctor: $doctorName"
 
@@ -154,142 +141,157 @@ class PrescriptionDetailsActivity : AppCompatActivity() {
         prescriptionCursor.close()
 
 
-        // Get medicines
+        // Load ALL medicines
+
         val medicineCursor: Cursor =
             databaseHelper.getPrescriptionMedicines(
                 prescriptionId
             )
 
+        val medicineNames =
+            StringBuilder()
+
+        val dosages =
+            StringBuilder()
+
+        val frequencies =
+            StringBuilder()
+
+        val durations =
+            StringBuilder()
+
+        var number = 1
 
         if (medicineCursor.moveToFirst()) {
 
-            medicineId =
-                medicineCursor.getLong(
-                    medicineCursor
-                        .getColumnIndexOrThrow(
-                            "id"
-                        )
+            do {
+
+                val id =
+                    medicineCursor.getLong(
+                        medicineCursor
+                            .getColumnIndexOrThrow(
+                                "id"
+                            )
+                    )
+
+                val medicineName =
+                    medicineCursor.getString(
+                        medicineCursor
+                            .getColumnIndexOrThrow(
+                                "medicine_name"
+                            )
+                    )
+
+                val dosage =
+                    medicineCursor.getString(
+                        medicineCursor
+                            .getColumnIndexOrThrow(
+                                "dosage"
+                            )
+                    )
+
+                val frequency =
+                    medicineCursor.getString(
+                        medicineCursor
+                            .getColumnIndexOrThrow(
+                                "frequency"
+                            )
+                    )
+
+                val duration =
+                    medicineCursor.getInt(
+                        medicineCursor
+                            .getColumnIndexOrThrow(
+                                "duration_days"
+                            )
+                    )
+
+                // Display all medicines
+
+                medicineNames.append(
+                    "$number. $medicineName\n"
                 )
 
-            val medicineName =
-                medicineCursor.getString(
-                    medicineCursor
-                        .getColumnIndexOrThrow(
-                            "medicine_name"
-                        )
+                dosages.append(
+                    "$number. $dosage\n"
                 )
 
-            val dosage =
-                medicineCursor.getString(
-                    medicineCursor
-                        .getColumnIndexOrThrow(
-                            "dosage"
-                        )
+                frequencies.append(
+                    "$number. $frequency\n"
                 )
 
-            val frequency =
-                medicineCursor.getString(
-                    medicineCursor
-                        .getColumnIndexOrThrow(
-                            "frequency"
-                        )
+                durations.append(
+                    "$number. $duration days\n"
                 )
 
-            durationDays =
-                medicineCursor.getInt(
-                    medicineCursor
-                        .getColumnIndexOrThrow(
-                            "duration_days"
+                // Keep first medicine for tracker
+                if (number == 1) {
+
+                    medicineId = id
+
+                    durationDays = duration
+
+                    takenCount =
+                        medicineCursor.getInt(
+                            medicineCursor
+                                .getColumnIndexOrThrow(
+                                    "taken_count"
+                                )
                         )
-                )
+                }
 
-            takenCount =
-                medicineCursor.getInt(
-                    medicineCursor
-                        .getColumnIndexOrThrow(
-                            "taken_count"
-                        )
-                )
+                number++
 
-
-            txtMedicineName.text =
-                medicineName
-
-            txtDosage.text =
-                "Dosage: $dosage"
-
-            txtFrequency.text =
-                "Frequency: $frequency"
-
-            txtDuration.text =
-                "Duration: $durationDays days"
-
-
-            updateProgress()
+            } while (
+                medicineCursor.moveToNext()
+            )
         }
 
         medicineCursor.close()
-    }
 
+
+        txtMedicineName.text =
+            medicineNames.toString()
+
+        txtDosage.text =
+            "Dosage:\n$dosages"
+
+        txtFrequency.text =
+            "Frequency:\n$frequencies"
+
+        txtDuration.text =
+            "Duration:\n$durations"
+
+        updateProgress()
+    }
 
     private fun markMedicineTaken() {
 
         if (takenCount >= durationDays) {
 
-            Toast.makeText(
-                this,
-                "Medicine course completed",
-                Toast.LENGTH_SHORT
-            ).show()
-
             return
         }
 
-
         takenCount++
-
 
         databaseHelper.updateTakenCount(
             medicineId,
             takenCount
         )
 
-
         updateProgress()
-
-
-        if (takenCount >= durationDays) {
-
-            Toast.makeText(
-                this,
-                "Medicine course completed!",
-                Toast.LENGTH_LONG
-            ).show()
-
-        } else {
-
-            Toast.makeText(
-                this,
-                "Medicine marked as taken",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
-
 
     private fun updateProgress() {
 
         txtProgress.text =
             "$takenCount / $durationDays"
 
-
         val remaining =
             durationDays - takenCount
 
-
         txtRemaining.text =
             "Remaining: $remaining"
-
 
         if (takenCount >= durationDays) {
 
@@ -303,9 +305,11 @@ class PrescriptionDetailsActivity : AppCompatActivity() {
 
             btnTaken.text =
                 "Mark as Taken"
+
+            btnTaken.isEnabled =
+                true
         }
     }
-
 
     override fun onDestroy() {
 
