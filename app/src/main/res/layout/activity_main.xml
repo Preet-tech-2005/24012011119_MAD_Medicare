@@ -8,68 +8,74 @@
     android:background="#F7FAFC"
     android:padding="20dp">
 
+    <!-- App Title -->
     <TextView
-        android:id="@+id/txtAppName"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="MediCare"
         android:textColor="#172554"
-        android:textSize="30sp"
+        android:textSize="26sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Project Subtitle -->
     <TextView
-        android:id="@+id/txtWelcome"
+        android:id="@+id/txtSubtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Prescription &amp; Medicine Tracker"
+        android:layout_marginTop="6dp"
+        android:text="Medicine Reminder &amp; Prescription Tracker"
         android:textColor="#64748B"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtAppName" />
+        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
+    <!-- Medicine Icon Background -->
     <TextView
-        android:id="@+id/txtPrescriptionIcon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="50dp"
+        android:id="@+id/txtMedicineIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="45dp"
         android:background="#DBEAFE"
         android:gravity="center"
         android:text="💊"
-        android:textSize="40sp"
+        android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtWelcome" />
+        app:layout_constraintTop_toBottomOf="@id/txtSubtitle" />
 
+    <!-- My Prescription Heading -->
     <TextView
         android:id="@+id/txtPrescriptionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="15dp"
         android:text="My Prescription"
         android:textColor="#172554"
-        android:textSize="21sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/txtPrescriptionIcon"
+        app:layout_constraintBottom_toBottomOf="@id/txtMedicineIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtPrescriptionIcon"
-        app:layout_constraintTop_toTopOf="@id/txtPrescriptionIcon" />
+        app:layout_constraintStart_toEndOf="@id/txtMedicineIcon"
+        app:layout_constraintTop_toTopOf="@id/txtMedicineIcon" />
 
+    <!-- My Prescription Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPrescription"
         android:layout_width="0dp"
-        android:layout_height="58dp"
+        android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:text="My Prescription"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:backgroundTint="#2563EB"
-        app:cornerRadius="15dp"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtPrescriptionIcon" />
+        app:layout_constraintTop_toBottomOf="@id/txtMedicineIcon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
