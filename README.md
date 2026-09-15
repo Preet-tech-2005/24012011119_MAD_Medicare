@@ -71,7 +71,7 @@ The Login Page provides the entry point to the MediCare application.
 
 Users can enter their login information and access the application.
 
-![Login Page](screenshots/loginPage.png)
+![Login Page](Screenshots/loginPage.png)
 
 ---
 
@@ -85,7 +85,7 @@ Users can:
 - Open prescription details
 - Add a new prescription
 
-![My Prescription](screenshots/myPrescription.png)
+![My Prescription](Screenshots/myPrescription.png)
 
 ---
 
@@ -101,7 +101,7 @@ Each listed prescription displays important information such as:
 
 Users can select a prescription to view its complete details.
 
-![Listed Prescription](screenshots/listedPrescription.png)
+![Listed Prescription](Screenshots/listedPrescription.png)
 
 ---
 
@@ -125,7 +125,7 @@ The Set Prescription Form allows users to enter prescription and medicine inform
 
 Multiple medicines can be added to a single prescription.
 
-![Set Prescription Form](screenshots/setPrescription.png)
+![Set Prescription Form](Screenshots/setPrescription.png)
 
 ---
 
@@ -148,7 +148,7 @@ It includes:
 
 The user can mark a medicine as **Taken** to update its progress.
 
-![Prescription Detail](screenshots/prescriptionDetail.png)
+![Prescription Detail](Screenshots/prescriptionDetail.png)
 
 ---
 
@@ -163,7 +163,7 @@ Example:
 > **Medicine Reminder**  
 > Time to take Amoxicillin
 
-![Medicine Notification](screenshots/notification.png)
+![Medicine Notification](Screenshots/notification.png)
 
 ---
 
